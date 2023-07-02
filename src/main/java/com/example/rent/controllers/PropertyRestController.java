@@ -22,20 +22,20 @@ public class PropertyRestController {
     @Autowired
     private PropertyService propertyService;
 
-    @Operation(summary = "Consulta por propiedades de una ciudad o para todas")
-    @GetMapping(value = "/propertysbycity", produces = { "application/json" })
-    public ResponseEntity<List<Property>> getPropertysByCity(@RequestParam(value = "city", defaultValue = "") String city) {
-
-        log.info("Se solicitan las propiedades de la ciudad " + city);
-        List<Property>propertyList = propertyService.getAllByCity(city);
-        return ResponseEntity.ok(propertyList);
-    }
+//    @Operation(summary = "Consulta por propiedades de una ciudad o para todas")
+//    @GetMapping(value = "/propertysbycity", produces = { "application/json" })
+//    public ResponseEntity<List<Property>> getPropertysByCity(@RequestParam(value = "city", defaultValue = "") String city) {
+//
+//        log.info("Se solicitan las propiedades de la ciudad " + city);
+//        List<Property>propertyList = propertyService.getAllByCity(city);
+//        return ResponseEntity.ok(propertyList);
+//    }
 
     @Operation(summary = "Consulta por propiedades de una ciudad")
     @GetMapping(value = "/propertysforhome", produces = { "application/json" })
-    public ResponseEntity<List<PropertyHomeDTO>> getPropertysForHome() {
-        log.info("Se solicitan las propiedades");
-        List<PropertyHomeDTO>propertyList = propertyService.getAllForHome();
+    public ResponseEntity<List<PropertyHomeDTO>> getPropertysForHome(@RequestParam(value = "city") Long city) {
+        log.info("Se solicitan las propiedades de la ciudad " + city);
+        List<PropertyHomeDTO>propertyList = propertyService.getAllByCity(city);
         return ResponseEntity.ok(propertyList);
     }
 
@@ -53,4 +53,13 @@ public class PropertyRestController {
         log.info("Exito");
         return ResponseEntity.ok(new RespuestaDTO("Evento guardado correctamente"));
     }
+
+    @Operation(summary = "Consulta por una propiedad")
+    @GetMapping(value = "/propertybyid", produces = { "application/json" })
+    public ResponseEntity<PropertyDTO> getPropertyById(@RequestParam(value = "propertyid") Long propertyId) {
+        log.info("Se solicita la propiedad " + propertyId);
+        PropertyDTO propertyDTO = propertyService.getPropertyById(propertyId);
+        return ResponseEntity.ok(propertyDTO);
+    }
+
 }

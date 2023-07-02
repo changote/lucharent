@@ -44,4 +44,10 @@ public class PropertyHomeDTO {
 
     @JsonProperty("opinion")
     private MiniOpinionDTO opinion;
+
+    @JsonProperty("photo")
+    private String photo;
+
+    @JsonProperty("propertyId")
+    private Long propertyId;
 }

@@ -51,7 +51,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers(resources).permitAll()
-                .antMatchers("/login", "/login/**", "/**/swagger-ui/**", "/status","/propertysbycity","/propertysforhome").permitAll()
+                .antMatchers("/login", "/login/**", "/**/swagger-ui/**", "/status","/propertysbycity","/propertysforhome",
+                        "/propertybyid","/citysbyname","/citybypropertyid").permitAll()
 
                 .and().authorizeRequests().antMatchers("/mi_cuenta").authenticated()
                 .and().authorizeRequests().antMatchers("/notifications").authenticated()

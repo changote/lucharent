@@ -35,8 +35,8 @@ public class Property {
     @Column(name="address")
     private String address;
 
-    @Column(name="city")
-    private String city;
+    @Column(name="city_id")
+    private Long cityId;
 
     @Column(name = "type")
     private String type;
@@ -46,9 +46,6 @@ public class Property {
 
     @Column(name="capacity")
     private int capacity;
-
-    @Column(name="phone")
-    private String phone;
 
     @Column(name="state")
     private boolean state;

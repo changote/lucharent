@@ -26,5 +26,11 @@ public interface PropertyRepository extends JpaRepository<Property, Long> {
             nativeQuery = true)
     List<Property> findAllToHome (@Param("city") String city);
 
+//    @Query(value = "select * " +
+//            "from rent_property rp " +
+//            "where rp.property_id = :propertyId",
+//            nativeQuery = true)
+    Property findByPropertyId(@Param("propertyId") Long propertyId);
+
 
 }
