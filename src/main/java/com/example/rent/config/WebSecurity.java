@@ -52,7 +52,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(resources).permitAll()
                 .antMatchers("/login", "/login/**", "/**/swagger-ui/**", "/status","/propertysbycity","/propertysforhome",
-                        "/propertybyid","/citysbyname","/citybypropertyid").permitAll()
+                        "/propertybyid","/citysbyname","/citybypropertyid", "/actuator").permitAll()
 
                 .and().authorizeRequests().antMatchers("/mi_cuenta").authenticated()
                 .and().authorizeRequests().antMatchers("/notifications").authenticated()

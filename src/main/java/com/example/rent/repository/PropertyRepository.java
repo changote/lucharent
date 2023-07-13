@@ -18,7 +18,7 @@ public interface PropertyRepository extends JpaRepository<Property, Long> {
     List<Property> findAllByCity(@Param("city") String city);
 
 
-    @Query(value = "select rp.title ,rp.description ,rp.address ,rp.city ,rp.type, rp.rooms ,rp.capacity ,rp.bathrooms , AVG(rr.stars) AS promedio_estrellas " +
+    @Query(value = "select rp.title ,rp.description ,rp.address ,rp.city ,rp.type, rp.rooms ,rp.capacity ,rp.bathrooms , AVG(rr.stars) AS promedio_estrellas, rp.time " +
             "    from rent_property rp " +
             "    join rent_reviews rr " +
             "    where rp.state = 1 and rr.property_id = rp.property_id " +

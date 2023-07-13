@@ -40,7 +40,7 @@ public class PropertyHomeDTO {
     private int bathrooms;
 
     @JsonProperty("price")
-    private double price;
+    private String price;
 
     @JsonProperty("opinion")
     private MiniOpinionDTO opinion;

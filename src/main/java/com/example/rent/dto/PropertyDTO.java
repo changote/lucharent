@@ -73,5 +73,5 @@ public class PropertyDTO {
     private MiniOpinionDTO opinion;
 
     @JsonProperty("price")
-    private double price;
+    private String price;
 }

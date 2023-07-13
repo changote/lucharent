@@ -57,16 +57,17 @@ public class PropertyService {
 
     public List<PropertyHomeDTO> getAllByCity(Long city){
 
-        String nativeQuery = "SELECT rp.title, rp.description, rp.address, rp.city_id, rp.type, rp.rooms, rp.capacity, rp.bathrooms, rp.price, rp2.url, promedio_estrellas, cantidad_reviews, rp.property_id " +
-                "FROM (" +
-                "    SELECT rp.property_id, AVG(stars) AS promedio_estrellas, COUNT(review_id) AS cantidad_reviews " +
-                "    FROM rent_property rp " +
-                "    JOIN rent_reviews rr ON rp.property_id = rr.property_id " +
-                "    WHERE rp.state = 1 and rp.city_id = :city " +
-                "    GROUP BY rp.property_id " +
-                ") AS rr " +
-                "JOIN rent_property rp ON rr.property_id = rp.property_id " +
-                "JOIN rent_photo rp2 ON rp.property_id = rp2.property_id";
+        String nativeQuery = "select rp.title,rp.description,rp.address, rp.city_id, rp.type, rp.rooms, rp.capacity, rp.bathrooms, rp.price, MIN(rp2.url) AS first_url, promedio_estrellas, " +
+                "cantidad_reviews, rp.property_id, rp.time " +
+                "FROM(SELECT rp.property_id, AVG(stars) AS promedio_estrellas, COUNT(review_id) AS cantidad_reviews " +
+                "        FROM rent_property rp " +
+                "            JOIN rent_reviews rr ON rp.property_id = rr.property_id " +
+                "        WHERE rp.state = 1 AND rp.city_id = :city " +
+                "        GROUP BY rp.property_id " +
+                "    ) AS rr " +
+                "    JOIN rent_property rp ON rr.property_id = rp.property_id " +
+                "    JOIN rent_photo rp2 ON rp.property_id = rp2.property_id " +
+                "GROUP BY rp.property_id;";
 
         Query query = entityManager.createNativeQuery(nativeQuery);
 
@@ -87,7 +88,7 @@ public class PropertyService {
             propertyHomeDTO.setNumberRooms(Integer.parseInt(result[5].toString()));
             propertyHomeDTO.setCapacity(Integer.parseInt(result[6].toString()));
             propertyHomeDTO.setBathrooms(Integer.parseInt(result[7].toString()));
-            propertyHomeDTO.setPrice(Double.parseDouble(result[8].toString()));
+            propertyHomeDTO.setPrice(setPriceDTO(Double.parseDouble(result[8].toString()),result[13].toString()));
             propertyHomeDTO.setPhoto(result[9].toString());
             miniOpinionDTO.setStars(Math.round(Double.parseDouble(result[10].toString())));
             miniOpinionDTO.setCantOpinion(Integer.parseInt(result[11].toString()));
@@ -101,6 +102,21 @@ public class PropertyService {
         return propertyHomeDTOS;
     }
 
+    public String setPriceDTO(double price, String time){
+        int priceInt = (int) price;
+        switch(time){
+            case "day":
+                return "$" + priceInt + " por dia";
+            case "week":
+                return "$" + priceInt + " por semana";
+            case "month":
+                return "$" + priceInt + " por mes";
+            case "fortnight":
+                return "$" + priceInt + " por quincena";
+        }
+        return "Sin precio";
+    }
+
     public PropertyDTO getPropertyById(Long propertyId){
         TypedQuery<Object[]> query = entityManager.createQuery("SELECT AVG(rr.stars) AS promStars, COUNT(rr.reviewId) AS cantReviews " +
                 "        FROM Property rp " +
@@ -112,7 +128,6 @@ public class PropertyService {
         PropertyDTO propertyDTO = propertyToDTO(propertyRepository.findByPropertyId(propertyId));
         System.out.println(propertyDTO.getPropertyId());
         propertyDTO.setPhotoList(photoRepository.findAllByPropertyId(propertyId));
-        @SuppressWarnings("unchecked")
         Object[] result = query.getSingleResult();
         MiniOpinionDTO miniOpinionDTO = new MiniOpinionDTO(0,0);
 
@@ -139,7 +154,7 @@ public class PropertyService {
         propertyDTO.setType(property.getType());
         propertyDTO.setParking(property.isParking());
         propertyDTO.setWifi(property.isWifi());
-        propertyDTO.setPrice(property.getPrice());
+        propertyDTO.setPrice(setPriceDTO(property.getPrice(),property.getTime()));
         propertyDTO.setWhenUpdated(property.getWhenUpdated());
 
         return propertyDTO;

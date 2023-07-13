@@ -65,4 +65,7 @@ public class Property {
     @Column(name="when_updated")
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate whenUpdated;
+
+    @Column(name="time")
+    private String time;
 }
