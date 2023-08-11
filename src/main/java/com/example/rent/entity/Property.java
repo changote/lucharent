@@ -41,6 +41,11 @@ public class Property {
     @Column(name = "type")
     private String type;
 
+    ///CARACTERISTICAS
+
+    @Column(name="characteristics_id")
+    private Long characteristicsId;
+
     @Column(name = "rooms")
     private int numberRooms;
 
@@ -49,12 +54,6 @@ public class Property {
 
     @Column(name="state")
     private boolean state;
-
-    @Column(name="wifi")
-    private boolean wifi;
-
-    @Column(name="parking")
-    private boolean parking;
 
     @Column(name="price")
     private double price;

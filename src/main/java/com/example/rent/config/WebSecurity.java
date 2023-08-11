@@ -44,15 +44,15 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowedOriginPatterns(Arrays.asList(mobilePattern, webPattern));
         corsConfiguration.setAllowedHeaders(new ArrayList<String>(Arrays.asList("*")));
-        corsConfiguration.setAllowedMethods(new ArrayList<String>(Arrays.asList("GET", "POST", "PUT", "DELETE", "PUT", "PATCH", "DELETE")));
+        corsConfiguration.setAllowedMethods(new ArrayList<String>(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH")));
         corsConfiguration.setAllowCredentials(true);
 
         httpSecurity
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers(resources).permitAll()
-                .antMatchers("/login", "/login/**", "/**/swagger-ui/**", "/status","/propertysbycity","/propertysforhome",
-                        "/propertybyid","/citysbyname","/citybypropertyid", "/actuator").permitAll()
+                .antMatchers("/login", "/login/**", "/**/swagger-ui/**","/propertysbycity","/propertysforhome",
+                        "/propertybyid","/citysbyname","/citybypropertyid","/createuser").permitAll()
 
                 .and().authorizeRequests().antMatchers("/mi_cuenta").authenticated()
                 .and().authorizeRequests().antMatchers("/notifications").authenticated()
@@ -78,7 +78,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowedOriginPatterns(Arrays.asList(mobilePattern, webPattern));
         corsConfiguration.setAllowedHeaders(new ArrayList<String>(Arrays.asList("*")));
-        corsConfiguration.setAllowedMethods(new ArrayList<String>(Arrays.asList("GET", "POST", "PUT", "DELETE", "PUT", "PATCH", "DELETE")));
+        corsConfiguration.setAllowedMethods(new ArrayList<String>(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH")));
 
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfiguration);

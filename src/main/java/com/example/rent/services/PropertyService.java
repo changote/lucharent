@@ -41,7 +41,6 @@ public class PropertyService {
         property.setAddress(newProperty.getAddress());
         property.setCityId(newProperty.getCityId());
         property.setBathrooms(newProperty.getBathrooms());
-        property.setParking(newProperty.getParking());
         property.setState(newProperty.getState());
         property.setCapacity(newProperty.getCapacity());
         property.setNumberRooms(newProperty.getNumberRooms());
@@ -50,7 +49,6 @@ public class PropertyService {
         property.setDescription(newProperty.getDescription());
         property.setType(newProperty.getType());
         property.setOwnerId(newProperty.getOwnerId());
-        property.setWifi(newProperty.getWifi());
 
         propertyRepository.save(property);
     }
@@ -152,8 +150,6 @@ public class PropertyService {
         propertyDTO.setDescription(property.getDescription());
         propertyDTO.setCapacity(property.getCapacity());
         propertyDTO.setType(property.getType());
-        propertyDTO.setParking(property.isParking());
-        propertyDTO.setWifi(property.isWifi());
         propertyDTO.setPrice(setPriceDTO(property.getPrice(),property.getTime()));
         propertyDTO.setWhenUpdated(property.getWhenUpdated());
 

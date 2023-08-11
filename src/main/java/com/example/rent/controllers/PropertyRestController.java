@@ -33,7 +33,7 @@ public class PropertyRestController {
 
     @Operation(summary = "Consulta por propiedades de una ciudad")
     @GetMapping(value = "/propertysforhome", produces = { "application/json" })
-    public ResponseEntity<List<PropertyHomeDTO>> getPropertysForHome(@RequestParam(value = "city") Long city) {
+    public ResponseEntity<List<PropertyHomeDTO>> getPropertysForHome(@RequestParam(value = "city") Long city) throws InterruptedException {
         log.info("Se solicitan las propiedades de la ciudad " + city);
         List<PropertyHomeDTO>propertyList = propertyService.getAllByCity(city);
         return ResponseEntity.ok(propertyList);
