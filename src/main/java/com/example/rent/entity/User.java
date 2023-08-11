@@ -40,6 +40,9 @@ public class User {
 	@Column(name="phone")
 	private String phone;
 
+	@Column(name="level")
+	private int level;
+
 	@Column(name="photo")
 	private String photo;
 }

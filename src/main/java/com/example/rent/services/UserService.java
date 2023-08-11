@@ -5,6 +5,8 @@ import com.example.rent.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 
 @Service
 public class UserService {
@@ -24,5 +26,10 @@ public class UserService {
             newUser.setPhoto("asd");
         }
         passwordService.saveUser(newUser);
+    }
+
+    public boolean isUserAdmin(String username) {
+        User user = userRepository.findUserByUsername(username);
+        return user.getLevel() == 11;
     }
 }

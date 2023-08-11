@@ -4,6 +4,7 @@ import com.example.rent.dto.UserDTO;
 import com.example.rent.entity.User;
 import com.example.rent.exceptions.AuthenticantionException;
 import com.example.rent.repository.UserRepository;
+import com.example.rent.services.PasswordService;
 import com.example.rent.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,6 +30,9 @@ public class AuthenticantionConnector {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private PasswordService passwordService;
+
 	public void authenticate(String username, String password) {
 		try {
 			if (password == null || password.equals("")) {
@@ -36,7 +40,7 @@ public class AuthenticantionConnector {
 			}
 			User user = userService.findUserByUsername(username);
 
-			if (user == null || !user.getPassword().equals(password)) {
+			if (user == null || !passwordService.verifyPassword(password,user.getPassword())) {
 				throw new RuntimeException();
 			}
 		} catch (Exception e) {
@@ -44,13 +48,14 @@ public class AuthenticantionConnector {
 		}
 	}
 
-	public UserDTO getInformationUser(String username, String password) {
+	public UserDTO getInformationUser(String username) {
 		try {
 			UserDTO usuario = new UserDTO();
-			usuario.setUsername(username);
+
 
 			User user = userService.findUserByUsername(username);
 			if (user != null) {
+				usuario.setUsername(username);
 				usuario.setName(user.getName());
 				usuario.setLastName(user.getLastName());
 				usuario.setEmail(user.getEmail());

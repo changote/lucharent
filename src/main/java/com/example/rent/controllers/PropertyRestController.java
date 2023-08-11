@@ -36,6 +36,7 @@ public class PropertyRestController {
     public ResponseEntity<List<PropertyHomeDTO>> getPropertysForHome(@RequestParam(value = "city") Long city) throws InterruptedException {
         log.info("Se solicitan las propiedades de la ciudad " + city);
         List<PropertyHomeDTO>propertyList = propertyService.getAllByCity(city);
+        Thread.sleep(2000);
         return ResponseEntity.ok(propertyList);
     }
 

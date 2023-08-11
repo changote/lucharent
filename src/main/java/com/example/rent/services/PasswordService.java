@@ -15,11 +15,11 @@ public class PasswordService {
         return BCrypt.hashpw(password,BCrypt.gensalt());
     }
 
-    public boolean verifiyPassword(){
-        return false;
+    public boolean verifyPassword(String password, String hashedPassword) {
+        return BCrypt.checkpw(password, hashedPassword);
     }
 
-    public User saveUser(User newUser){
-        return this.userRepository.save(newUser);
+    public void saveUser(User newUser){
+        this.userRepository.save(newUser);
     }
 }
